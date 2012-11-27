@@ -1,0 +1,112 @@
+============================================================================
+
+Example: set with Functor
+
+#include <set>
+using namespace std;
+
+struct Point { int x, y; };
+
+// compare points in lexigographic order
+
+struct CompPoint 
+{
+  // return true iff a < b 
+  bool operator()(const Point &a, const Point &b) {
+    int d = a.x - b.x;
+    if (d < 0) return true;
+    if (d > 0) return false;
+    return a.y < b.y;
+  }
+};
+
+set<Point, CompPoint> point_set; // set of Points
+
+somewhere in set<T,C> implementation:
+
+   C f; ... if (f(a, b)) ... // a < b
+
+============================================================================
+Frequently Used set Functions
+
+iterator begin()    : returns iterator to first element
+iterator end()      : returns iterator to end (last element+1)
+
+size_type size()    : # of set elements
+bool empty() const  : true iff set is empty
+
+pair<iterator, bool> insert(const T& x) : 
+                        inserts element; if new, returns
+                        (iterator,true) - otherwise (?,false)
+pair<iterator, bool> p = s.insert(5); if (p.second) { //new...
+
+void erase(iterator it)  : removes element pointed to by pos
+void clear()             : remove all elements
+
+iterator find(const T& x) const	:    looks for x, returns its 
+                       position if found, and end() otherwise  
+
+set_union(), set_intersection(), set_difference() : set ops.
+
+============================================================================
+
+============================================================================
+
+map Example
+
+#include <map>
+
+// handy type abbreviation
+// Month2Days now refers to std::map<std::string, int>
+typedef std::map<std::string, int> Month2Days;
+Month2Days m2d;
+
+// the following is equivalent to:
+// m2d.insert(Pair<std::string,int>("january", 31));
+// ...
+m2d["january"]   = 31; m2d["february"] = 28;
+m2d["march"]     = 31; m2d["april"]    = 30;
+m2d["may"]       = 31; m2d["june"]     = 30;
+m2d["july"]      = 31; m2d["august"]   = 31;
+m2d["september"] = 30; m2d["october"]  = 31;
+m2d["november"]  = 30; m2d["december"] = 31;
+
+(Careful - [] operator creates pair if it doesn't exist in map yet!)
+  
+string m = "june";
+
+Month2Days::iterator cur = m2d.find(m);
+
+// pair.first contains key (can't be changed)
+// pair.second contains associated date (can be changed)
+
+if (cur != m2d.end()) {
+  // we found it
+  cout << m << " has " << (*cur).second << " days" << endl;
+} else 
+  cout << "unknown month: " << m << endl;
+
+============================================================================
+
+Frequently Used map Members
+
+iterator begin()   : returns iterator to first pair
+iterator end()     : returns iterator to end (past last pair)
+
+size_type size()   : # of pairs in map
+bool empty() const : true iff map is empty
+
+void clear() : erase all pairs
+void erase(iterator pos) : removes pair at position pos
+pair<iterator, bool> insert(const Key&):
+               inserts key, returns iterator and true iff new
+
+iterator find(const Key& k) :
+                     looks for key k, returns its position if
+                     found, and end() otherwise 
+
+Data& operator[](const Key& k) :
+                      returns the data associated with key k; 
+            if it does not exists inserts default data value!
+
+============================================================================
