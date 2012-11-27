@@ -1,4 +1,4 @@
-//TODO Remove this and place asserts in all relevant functions
+//TODO Remove this and place asserts in all relevant functions. Yea, what he said
 
 /* Ant.C
  * 		Author: Eric Klinger, Jake Brand
